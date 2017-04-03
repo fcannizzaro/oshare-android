@@ -2,7 +2,29 @@
 
 Node Object Sharing (Socket) | **Remote Method Invocation** | Support for **callbacks**
 
+[![](https://jitpack.io/v/fcannizzaro/oshare-android.svg)](https://jitpack.io/#fcannizzaro/oshare-android)
+
 # Android client of [Oshare](https://github.com/fcannizzaro/oshare)
+
+## Dependencies
+
+### Step 1.
+Add the JitPack repository to your build file
+```gradle
+  allprojects {
+    repositories {
+      ...
+      maven { url 'https://jitpack.io' }
+    }
+  }
+```
+### Step 2.
+Add the dependency
+```gradle
+  dependencies {
+    compile 'com.github.fcannizzaro:oshare-android:1.0'
+  }
+```
 
 ## Before Start
 
