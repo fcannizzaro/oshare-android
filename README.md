@@ -6,8 +6,6 @@ Node Object Sharing (Socket) | **Remote Method Invocation** | Support for **call
 
 # Android client of [Oshare](https://github.com/fcannizzaro/oshare)
 
-## Dependencies
-
 ### Step 1.
 Add the JitPack repository to your build file
 ```gradle
