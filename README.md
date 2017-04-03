@@ -20,7 +20,7 @@ Add the JitPack repository to your build file
 Add the dependency
 ```gradle
   dependencies {
-    compile 'com.github.fcannizzaro:oshare-android:1.0'
+    compile 'com.github.fcannizzaro:oshare-android:1.0.1'
   }
 ```
 
