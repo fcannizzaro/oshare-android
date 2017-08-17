@@ -23,6 +23,7 @@ import io.socket.emitter.Emitter;
  */
 public class Oshare {
 
+    private static boolean authorized = false;
     private static Oshare instance;
     private Socket socket;
 
@@ -34,10 +35,18 @@ public class Oshare {
     }
 
     public static void init(String url, Class clazz) {
-        init(url, clazz, null);
+        init(url, clazz, null, null);
     }
 
-    public static void init(String url, final Class clazz, final ReadyListener listener) {
+    public static void init(String url, Class clazz, ReadyListener listener) {
+        init(url, clazz, null, listener);
+    }
+
+    public static void init(String url, Class clazz, String authorization) {
+        init(url, clazz, authorization, null);
+    }
+
+    public static void init(String url, final Class clazz, final String authorization, final ReadyListener listener) {
 
         if (instance != null) {
             return;
@@ -57,7 +66,7 @@ public class Oshare {
                         listener.onConnected();
                     }
 
-                    instance.socket.emit("share", Shared.mock());
+                    instance.socket.emit("authorization", authorization);
 
                 }
             });
@@ -76,21 +85,38 @@ public class Oshare {
                 }
             });
 
+            instance.socket.on("authorization", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+
+                    authorized = authorization == null && args[0] == null || authorization.equals(args[0]);
+
+                    if (authorized) {
+                        instance.socket.emit("share", Shared.mock());
+                    }
+
+                }
+            });
+
             instance.socket.on("invoke", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     try {
 
-                        JSONObject object = (JSONObject) args[0];
-                        JSONArray array = object.getJSONArray("args");
+                        if (authorized) {
 
-                        Object[] objects = new Object[array.length()];
+                            JSONObject object = (JSONObject) args[0];
+                            JSONArray array = object.getJSONArray("args");
 
-                        for (int i = 0; i < array.length(); i++) {
-                            objects[i] = array.get(i);
+                            Object[] objects = new Object[array.length()];
+
+                            for (int i = 0; i < array.length(); i++) {
+                                objects[i] = array.get(i);
+                            }
+
+                            Shared.invoke(object.getString("method"), objects);
+
                         }
-
-                        Shared.invoke(object.getString("method"), objects);
 
                     } catch (JSONException e) {
                         e.printStackTrace();

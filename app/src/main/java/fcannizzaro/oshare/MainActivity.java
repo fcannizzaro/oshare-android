@@ -26,11 +26,11 @@ public class MainActivity extends AppCompatActivity implements ReadyListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // connect and run
-        Oshare.init("http://192.168.1.100:3000", Remote.class, this);
+        Oshare.init("http://192.168.1.100:3000", Remote.class, "$auth-key", this);
 
     }
 
@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements ReadyListener {
 
     @Override
     public void onConnected() {
-        System.out.println("sdflkisj");
         Remote.api.run(Oshare.Cb(this));
     }
 
