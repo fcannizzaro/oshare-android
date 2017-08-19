@@ -3,6 +3,7 @@ package fcannizzaro.oshare;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.fcannizzaro.oshare.Oshare;
 import com.fcannizzaro.oshare.annotations.Callback;
